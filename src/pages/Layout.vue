@@ -7,7 +7,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+            <img src="../assert/logo.jpg" />
           </q-avatar>
           音乐盒
         </q-toolbar-title>
