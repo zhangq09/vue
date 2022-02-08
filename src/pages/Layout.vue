@@ -7,7 +7,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-toolbar-title>
           <q-avatar>
-            <img src="../assert/logo.jpg" />
+            <img src="../assert/logo.png" />
           </q-avatar>
           音乐盒
         </q-toolbar-title>
