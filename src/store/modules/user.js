@@ -23,7 +23,8 @@ const actions = {
       login({ username, password })
         .then((response) => {
           const authorization = response.headers['authorization']
-          commit('SET_TOKEN', authorization)
+          commit('SET_TOKEN', response.data)
+          commit('SET_NAME', response.data.username)
           setToken(authorization)
           resolve()
         })
@@ -61,7 +62,7 @@ const mutations = {
     state.introduction = introduction
   },
   SET_NAME: (state, name) => {
-    state.name = name
+    state.User.username = name
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar

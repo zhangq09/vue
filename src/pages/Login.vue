@@ -23,7 +23,9 @@
           :rules="[(val) => (val !== null && val !== '') || '请输入密码']"
         />
 
-        <q-toggle v-model="accept" label="记住我的账号密码" />
+        <div class="rememberMe">
+          <q-toggle v-model="accept" label="记住我的账号密码" />
+        </div>
 
         <div>
           <q-btn
@@ -32,6 +34,10 @@
             type="submit"
             color="primary"
           />
+        </div>
+        <div class="register">
+          还没有账号?
+          <a style="color: #00b5e5; cursor: pointer">注册一个!</a>
         </div>
       </q-form>
     </q-card>
@@ -53,9 +59,12 @@ const OnSubmit = () => {
       username: username.value.trim(),
       password: password.value,
     })
-    .then((res) => {
-      console.log(res)
-    })
+    .then()
+}
+const Register = () => {
+  router.push({
+    path: '/login',
+  })
 }
 </script>
 
@@ -78,6 +87,15 @@ const OnSubmit = () => {
     .from {
       width: 400px;
     }
+  }
+  .rememberMe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .register {
+    text-align: center;
+    font-size: 12;
   }
 }
 </style>

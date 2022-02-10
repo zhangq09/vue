@@ -10,9 +10,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    console.log('====>', store)
     if (store.state.user.User.token) {
-      console.log('====>', store.state.user.User.token)
       config.headers['Authorization'] = store.state.user.User.token
     }
     return config
