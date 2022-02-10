@@ -5,12 +5,12 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="../assert/logo.png" />
-          </q-avatar>
-          音乐盒
-        </q-toolbar-title>
+        <q-toolbar-title> 音乐盒 </q-toolbar-title>
+
+        <q-space />
+        <q-avatar color="teal" text-color="white" @click="toLogin">{{
+          nicknameFirstWord
+        }}</q-avatar>
       </q-toolbar>
     </q-header>
 
@@ -26,21 +26,21 @@
   </q-layout>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+import router from '../router'
 
-export default {
-  setup() {
-    const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref(false)
 
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-    }
-  },
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+function toLogin() {
+  router.push('/login')
+}
+const nicknameFirstWord = useStore().getters.nicknameFirstWord
 </script>
 
 <style>

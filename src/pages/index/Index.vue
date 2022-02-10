@@ -1,9 +1,14 @@
 <template>
-  <div>这是主页</div>
+  <div>欢迎光临:a</div>
 </template>
 
-<script>
-export default {}
+<script setup>
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex'
+
+const store = useStore()
+console.log(store)
+console.log(store.state.user.User.nickname)
 </script>
 
 <style>

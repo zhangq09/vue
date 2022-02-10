@@ -2,11 +2,11 @@
   <div class="login-page">
     <q-card class="login-from-content">
       <div class="title">音乐盒</div>
-      <q-form class="q-gutter-md from">
+      <q-form class="q-gutter-md from" @submit="OnSubmit">
         <q-input
           rounded
           filled
-          v-model="name"
+          v-model="username"
           label="用户名:"
           hint="Name and surname"
           lazy-rules
@@ -40,10 +40,23 @@
 
 <script setup>
 import { ref } from '@vue/reactivity'
+import { useStore } from 'vuex'
+import router from '../router'
 
-const name = ref('')
+const username = ref('')
 const password = ref('')
 const accept = ref(false)
+const store = useStore()
+const OnSubmit = () => {
+  store
+    .dispatch('login', {
+      username: username.value.trim(),
+      password: password.value,
+    })
+    .then((res) => {
+      console.log(res)
+    })
+}
 </script>
 
 <style scoped lang="less">
