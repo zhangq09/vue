@@ -1,16 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '../pages/Layout.vue'
-
-const routes = [
+import menuRoutes from './menuRoutes.js'
+const constRoutes = [
   {
     path: '/',
     component: Layout,
-    children: [
-      {
-        path: '/index',
-        component: () => import('../pages/index/Index.vue'),
-      },
-    ],
+    redirect: '/index',
+    children: [...menuRoutes],
   },
   {
     path: '/login',
@@ -32,7 +28,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes: constRoutes,
 })
 
 export function resetRouter() {

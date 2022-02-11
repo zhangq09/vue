@@ -8,15 +8,34 @@
         <q-toolbar-title> 音乐盒 </q-toolbar-title>
 
         <q-space />
-        <q-avatar color="teal" text-color="white" @click="toLogin">{{
-          nicknameFirstWord
-        }}</q-avatar>
+        <q-avatar
+          color="teal"
+          text-color="white"
+          style="cursor: pointer"
+          @click="clickTo('/login')"
+          >{{ nicknameFirstWord }}</q-avatar
+        >
       </q-toolbar>
     </q-header>
 
     <!-- 这里是菜单 -->
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-      <!-- drawer content -->
+      <q-list padding class="text-primary">
+        <q-item
+          clickable
+          v-ripple
+          :active="item.name === route.name"
+          active-class="my-menu-link"
+          v-for="(item, index) in menuRoutes"
+          :key="index"
+          @click="clickTo(item.path)"
+        >
+          <q-item-section avatar>
+            <q-icon :name="item.meta.icon" />
+          </q-item-section>
+          <q-item-section>{{ item.meta.title }}</q-item-section>
+        </q-item>
+      </q-list>
     </q-drawer>
 
     <!-- 这里是中间展示的部分 -->
@@ -26,22 +45,41 @@
   </q-layout>
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
+import store from '../store'
+import menuRoutes from '../router/menuRoutes.js'
+import { useRoute } from 'vue-router'
 import router from '../router'
+export default {
+  components: {},
+  setup() {
+    const leftDrawerOpen = ref(false)
 
-const leftDrawerOpen = ref(false)
+    const toggleLeftDrawer = () => {
+      leftDrawerOpen.value = !leftDrawerOpen.value
+    }
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+    const clickTo = (path) => {
+      router.push(path)
+    }
+    const route = useRoute()
+    const nicknameFirstWord = store.getters.nicknameFirstWord
+    return {
+      leftDrawerOpen,
+      toggleLeftDrawer,
+      clickTo,
+      nicknameFirstWord,
+      menuRoutes,
+      route,
+    }
+  },
 }
-
-function toLogin() {
-  router.push('/login')
-}
-const nicknameFirstWord = useStore().getters.nicknameFirstWord
 </script>
 
-<style>
+<style lang="less">
+.my-menu-link {
+  color: white;
+  background-color: #f2c037;
+}
 </style>
