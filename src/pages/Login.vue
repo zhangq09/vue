@@ -48,22 +48,28 @@
 import { ref } from '@vue/reactivity'
 import { useStore } from 'vuex'
 import router from '../router'
+import { useRoute } from 'vue-router'
 
 const username = ref('')
 const password = ref('')
 const accept = ref(false)
 const store = useStore()
+const route = useRoute()
 const OnSubmit = () => {
   store
-    .dispatch('login', {
+    .dispatch('user/login', {
       username: username.value.trim(),
       password: password.value,
     })
-    .then()
+    .then(() => {
+      store.dispatch('user/fetchCurrentUser').then(() => {
+        router.push({ path: route.query.redirect || '/' })
+      })
+    })
 }
 const Register = () => {
   router.push({
-    path: '/login',
+    path: '/index',
   })
 }
 </script>

@@ -1,12 +1,18 @@
 <template>
-  <div>欢迎光临:a</div>
+  <div>欢迎光临:{{ username }}</div>
+  <q-btn color="primary" class="q-mt-md" label="退出" @click="logout"></q-btn>
 </template>
 
 <script setup>
-import { computed } from '@vue/runtime-core'
-import { useStore } from 'vuex'
+import router from '../../router'
+import store from '../../store'
 
-const store = useStore()
+const username = store.state.user.currentUser.username
+const logout = () => {
+  store.dispatch('user/logout').then(() => {
+    router.push('/login')
+  })
+}
 </script>
 
 <style>

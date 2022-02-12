@@ -64,7 +64,7 @@ export default {
       router.push(path)
     }
     const route = useRoute()
-    const nicknameFirstWord = store.getters.nicknameFirstWord
+    const nicknameFirstWord = store.getters['user/nicknameFirstWord']
     return {
       leftDrawerOpen,
       toggleLeftDrawer,

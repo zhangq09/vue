@@ -50,7 +50,7 @@ const pagination = reactive({
   rowsPerPage: 3,
 })
 const pagesNumber = computed(() =>
-  Math.ceil(rows.length / pagination.value.rowsPerPage)
+  Math.ceil(rows.length / pagination.rowsPerPage)
 )
 const searcha = () => {
   search({ page: pagination.page, size: pagination.rowsPerPage }).then(
