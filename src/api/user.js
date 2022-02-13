@@ -11,3 +11,7 @@ export const search = (pages) => {
 export const me = () => {
   return get('/users/current')
 }
+
+export const createUser = (user) => {
+  return post('/users/', user)
+}

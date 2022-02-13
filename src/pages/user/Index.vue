@@ -1,64 +1,85 @@
 <template>
   <div class="q-pa-md">
-    <div class="q-mt-md q-mb-md">
-      <q-btn color="primary" label="点击添加用户"></q-btn>
-    </div>
     <q-table
+      title="Treats"
       :rows="rows"
       :columns="columns"
-      row-key="name"
+      row-key="id"
       v-model:pagination="pagination"
-      hide-pagination
-    />
-
-    <div class="row justify-center q-mt-md">
-      <q-pagination
-        v-model="pagination.page"
-        color="grey-8"
-        :max="pagesNumber"
-        size="sm"
-      />
-    </div>
+      :loading="loading"
+    >
+      <template v-slot:loading>
+        <q-inner-loading showing color="primary" />
+      </template>
+    </q-table>
   </div>
 </template>
 
-<script setup>
-import { reactive } from '@vue/reactivity'
-import { computed } from 'vue'
+<script>
+import { ref, computed, watchEffect } from 'vue'
 import { search } from '../../api/user'
 const columns = [
   {
     name: 'id',
     label: 'Id',
+    field: 'id',
   },
   {
     name: 'username',
     label: '用户名',
+    field: 'username',
   },
   {
     name: 'nickname',
     label: '昵称',
+    field: 'nickname',
   },
 ]
 
-const rows = []
+export default {
+  setup() {
+    let rows = ref([
+      { id: '1', username: 'admin', nickname: 'admin' },
+      { id: '11', username: 'admin', nickname: 'admin' },
+    ])
 
-const pagination = reactive({
-  sortBy: 'desc',
-  descending: false,
-  page: 2,
-  rowsPerPage: 3,
-})
-const pagesNumber = computed(() =>
-  Math.ceil(rows.length / pagination.rowsPerPage)
-)
-const searcha = () => {
-  search({ page: pagination.page, size: pagination.rowsPerPage }).then(
-    (res) => {},
-    (error) => {}
-  )
+    const pagination = ref({
+      sortBy: 'desc',
+      descending: false,
+      page: 1,
+      rowsPerPage: 3,
+    })
+
+    const loading = ref(false)
+
+    watchEffect(() => {
+      loading.value = true
+      new Promise((resolve, reject) => {
+        search({
+          page: pagination.value.page,
+          size: pagination.value.rowsPerPage,
+        })
+          .then((data) => {
+            if (data.content instanceof Array) {
+              rows.value = data.content
+            }
+            resolve(rows.value)
+            loading.value = false
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+    })
+    return {
+      pagination,
+      columns,
+      rows,
+      loading,
+      pagesNumber: computed(() =>
+        Math.ceil(rows.length / pagination.value.rowsPerPage)
+      ),
+    }
+  },
 }
 </script>
-
-<style scoped lang="less">
-</style>

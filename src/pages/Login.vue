@@ -35,10 +35,6 @@
             color="primary"
           />
         </div>
-        <div class="register">
-          还没有账号?
-          <a style="color: #00b5e5; cursor: pointer">注册一个!</a>
-        </div>
       </q-form>
     </q-card>
   </div>
@@ -66,11 +62,6 @@ const OnSubmit = () => {
         router.push({ path: route.query.redirect || '/' })
       })
     })
-}
-const Register = () => {
-  router.push({
-    path: '/index',
-  })
 }
 </script>
 

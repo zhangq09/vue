@@ -12,7 +12,7 @@
           color="teal"
           text-color="white"
           style="cursor: pointer"
-          @click="clickTo('/login')"
+          @click="clickTo('/regsiter')"
           >{{ nicknameFirstWord }}</q-avatar
         >
       </q-toolbar>

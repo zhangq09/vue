@@ -31,7 +31,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       createToken({ username, password })
         .then((token) => {
-          console.log('token===>', token)
           commit('SET_TOKEN', token)
           setToken(token)
           resolve()
