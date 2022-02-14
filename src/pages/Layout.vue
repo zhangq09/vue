@@ -12,7 +12,7 @@
           color="teal"
           text-color="white"
           style="cursor: pointer"
-          @click="clickTo('/regsiter')"
+          @click="clickTo('/login')"
           >{{ nicknameFirstWord }}</q-avatar
         >
       </q-toolbar>
@@ -26,7 +26,7 @@
           v-ripple
           :active="item.name === route.name"
           active-class="my-menu-link"
-          v-for="(item, index) in menuRoutes"
+          v-for="(item, index) in menus"
           :key="index"
           @click="clickTo(item.path)"
         >
@@ -51,6 +51,7 @@ import store from '../store'
 import menuRoutes from '../router/menuRoutes.js'
 import { useRoute } from 'vue-router'
 import router from '../router'
+import { isAdmin } from '../utils/role.js'
 export default {
   components: {},
   setup() {
@@ -64,13 +65,18 @@ export default {
       router.push(path)
     }
     const route = useRoute()
+    const menus = menuRoutes.filter((r) => {
+      if (r.meta.isAdmin !== true || (r.meta.isAdmin === true && isAdmin())) {
+        return r
+      }
+    })
     const nicknameFirstWord = store.getters['user/nicknameFirstWord']
     return {
       leftDrawerOpen,
       toggleLeftDrawer,
       clickTo,
       nicknameFirstWord,
-      menuRoutes,
+      menus,
       route,
     }
   },

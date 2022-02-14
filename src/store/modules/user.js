@@ -1,6 +1,5 @@
 import { createToken } from '../../api/token.js'
 import { me } from '../../api/user.js'
-import router from '../../router'
 import {
   getToken,
   setToken,
@@ -56,11 +55,9 @@ const actions = {
   // user logout
   logout({ commit }) {
     commit('SET_TOKEN', '')
-    commit('SET_ROLES', [])
     commit('SET_USER', null)
     removeToken()
     removeCurrentUser()
-    router.push('/login')
   },
 }
 
@@ -68,17 +65,8 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction
-  },
   SET_USER: (state, currentUser) => {
     state.currentUser = currentUser
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
   },
 }
 

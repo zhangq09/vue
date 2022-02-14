@@ -1,7 +1,8 @@
 <template>
   <div class="q-pa-md">
+    <Register />
+
     <q-table
-      title="Treats"
       :rows="rows"
       :columns="columns"
       row-key="id"
@@ -16,8 +17,9 @@
 </template>
 
 <script>
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed, watchEffect, onMounted } from 'vue'
 import { search } from '../../api/user'
+import Register from './Register.vue'
 const columns = [
   {
     name: 'id',
@@ -37,11 +39,11 @@ const columns = [
 ]
 
 export default {
+  components: {
+    Register,
+  },
   setup() {
-    let rows = ref([
-      { id: '1', username: 'admin', nickname: 'admin' },
-      { id: '11', username: 'admin', nickname: 'admin' },
-    ])
+    let rows = ref([])
 
     const pagination = ref({
       sortBy: 'desc',
@@ -51,7 +53,6 @@ export default {
     })
 
     const loading = ref(false)
-
     watchEffect(() => {
       loading.value = true
       new Promise((resolve, reject) => {
@@ -71,6 +72,7 @@ export default {
           })
       })
     })
+
     return {
       pagination,
       columns,

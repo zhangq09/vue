@@ -5,14 +5,8 @@ const constRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/login',
-    children: [
-      ...menuRoutes,
-      {
-        path: '/register',
-        component: () => import('../pages/Register.vue'),
-      },
-    ],
+    redirect: '/index',
+    children: [...menuRoutes],
   },
   {
     path: '/login',
