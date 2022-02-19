@@ -117,7 +117,7 @@
 
 <script>
 import { reactive, ref, toRefs } from '@vue/reactivity'
-import { createUser } from '../../api/user.js'
+import { useCreateUser } from '../../composables/useUser.js'
 import store from '../../store'
 import router from '../../router'
 export default {
@@ -153,26 +153,13 @@ export default {
       password: '',
       roles: [],
     })
+
     const secondDialog = ref(false)
+
     const inception = ref(false)
+
     const OnSubmit = () => {
-      new Promise((resolve, reject) => {
-        createUser({
-          username: user.username,
-          nickname: user.nickname,
-          password: user.password,
-          gender: user.gender.value,
-          roles: user.roles.map((r) => {
-            return r.value
-          }),
-        })
-          .then((data) => {
-            resolve(data)
-          })
-          .catch((error) => {
-            reject(error)
-          })
-      }).then(() => {
+      useCreateUser(user).then(() => {
         secondDialog.value = true
       })
     }

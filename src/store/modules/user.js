@@ -6,6 +6,7 @@ import {
   removeToken,
   setCurrentUser,
   removeCurrentUser,
+  getCurrentUser,
 } from '../../utils/auth.js'
 
 const state = {
@@ -19,9 +20,9 @@ const state = {
 
 const getters = {
   nicknameFirstWord: (state) => {
-    return state.currentUser && state.currentUser.nickname
-      ? state.currentUser.nickname.slice(0, 1)
-      : ''
+    return getCurrentUser() && getCurrentUser().nickname
+      ? getCurrentUser().nickname.slice(0, 3)
+      : '未登录'
   },
 }
 

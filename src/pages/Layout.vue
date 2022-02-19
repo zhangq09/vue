@@ -11,6 +11,7 @@
         <q-avatar
           color="teal"
           text-color="white"
+          font-size="8px"
           style="cursor: pointer"
           @click="clickTo('/login')"
           >{{ nicknameFirstWord }}</q-avatar

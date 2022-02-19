@@ -17,9 +17,10 @@
 </template>
 
 <script>
-import { ref, computed, watchEffect, onMounted } from 'vue'
+import { ref, computed, watchEffect, onMounted, toRef } from 'vue'
 import { search } from '../../api/user'
 import Register from './Register.vue'
+import { useSearchUser } from '../../composables/useUser.js'
 const columns = [
   {
     name: 'id',
@@ -53,34 +54,25 @@ export default {
     })
 
     const loading = ref(false)
+
     watchEffect(() => {
       loading.value = true
-      new Promise((resolve, reject) => {
-        search({
-          page: pagination.value.page,
-          size: pagination.value.rowsPerPage,
-        })
-          .then((data) => {
-            if (data.content instanceof Array) {
-              rows.value = data.content
-            }
-            resolve(rows.value)
-            loading.value = false
-          })
-          .catch((error) => {
-            reject(error)
-          })
+      useSearchUser(pagination).then((data) => {
+        rows.value = data
+        loading.value = false
       })
     })
+
+    const pagesNumber = computed(() =>
+      Math.ceil(rows.value.length / pagination.value.rowsPerPage)
+    )
 
     return {
       pagination,
       columns,
       rows,
       loading,
-      pagesNumber: computed(() =>
-        Math.ceil(rows.length / pagination.value.rowsPerPage)
-      ),
+      pagesNumber,
     }
   },
 }
